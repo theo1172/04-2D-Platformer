@@ -73,8 +73,9 @@ func restart_level():
 
 func save_game():
 	save_data["general"]["coins"] = []					# creating a list of all the coins and mines that appear in the scene
-	for c in Coins.get_children():
-		save_data["general"]["coins"].append(var2str(c.position))	# get a json representation of each of the coins
+	if Coins != null:
+		for c in Coins.get_children():
+			save_data["general"]["coins"].append(var2str(c.position))	# get a json representation of each of the coins
 
 	var save_game = File.new()						# create a new file object
 	save_game.open_encrypted_with_pass(SAVE_PATH, File.WRITE, SECRET)	# prep it for writing to, make sure the contents are encrypted
