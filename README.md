@@ -1,16 +1,22 @@
-# 2D-Platformer-Character
+# 04-2D-Platform
+
 25 March 2023
+
 Basic 2D platformer game for MSCH-C220
+
 Use WASD to walk and jump around the scenes to collect as many coins as possible while avoiding enemies
 
 ## Implementation
+
 Built using Godot 3.5
+
 Extra features:
 - Sound effects and music
 - Save and Load
 - Colorful user interface
 
 ## References
+
 Sound effects from [Freesound](https://freesound.org/) by:
 - joelle.oh.world - [Death](https://freesound.org/s/643139/)
 - OwlStorm - [Coins](https://freesound.org/s/404774/) and [Jump](https://freesound.org/s/404793/)
