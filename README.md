@@ -11,7 +11,7 @@ Use WASD to walk and jump around the scenes to collect as many coins as possible
 Built using Godot 3.5
 
 Extra features:
-8 Sound effects and music
+- Sound effects and music
 - Save and Load
 - Colorful user interface
 
