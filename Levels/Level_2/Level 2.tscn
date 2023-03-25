@@ -1,0 +1,390 @@
+[gd_scene load_steps=36 format=2]
+
+[ext_resource path="res://Levels/Tiles_Ground.tres" type="TileSet" id=1]
+[ext_resource path="res://UI/HUD.gd" type="Script" id=2]
+[ext_resource path="res://Coins/Coin.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Levels/Tiles_Background.tres" type="TileSet" id=4]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Camera.gd" type="Script" id=6]
+[ext_resource path="res://StateMachine/Player_Container.gd" type="Script" id=7]
+[ext_resource path="res://Levels/Level_2/Portal_to_3.gd" type="Script" id=8]
+[ext_resource path="res://Levels/Tiles_Ground_2.tres" type="TileSet" id=9]
+[ext_resource path="res://Assets/Images/spritesheet_tiles.png" type="Texture" id=10]
+[ext_resource path="res://Levels/Tiles_Platforms.tres" type="TileSet" id=11]
+[ext_resource path="res://Levels/Level_2/Enemies/Enemy_Air.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Levels/Level_2/Enemy_Water.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Levels/Level_2/Area2D.gd" type="Script" id=14]
+[ext_resource path="res://Levels/Tiles_Foreground.tres" type="TileSet" id=15]
+[ext_resource path="res://Assets/Images/blue_grass.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Sounds/Door.wav" type="AudioStream" id=17]
+[ext_resource path="res://Assets/Sounds/Jump.wav" type="AudioStream" id=18]
+[ext_resource path="res://Assets/Sounds/Coin_Pickup.wav" type="AudioStream" id=19]
+[ext_resource path="res://Assets/Sounds/Die.wav" type="AudioStream" id=20]
+[ext_resource path="res://Assets/Sounds/Button.wav" type="AudioStream" id=21]
+[ext_resource path="res://Assets/AnthologyRegularDemo-qd2x.ttf" type="DynamicFontData" id=22]
+[ext_resource path="res://Menu_Theme.tres" type="Theme" id=23]
+[ext_resource path="res://UI/Pause_Menu.gd" type="Script" id=24]
+
+[sub_resource type="RectangleShape2D" id=17]
+extents = Vector2( 257.5, 27 )
+
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 162.5, 16 )
+
+[sub_resource type="RectangleShape2D" id=19]
+extents = Vector2( 66.5, 4 )
+
+[sub_resource type="RectangleShape2D" id=20]
+extents = Vector2( 130, 5 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 10 )
+region = Rect2( 384, 1280, 128, 256 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 10 )
+region = Rect2( 384, 1280, 128, 256 )
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 10 )
+region = Rect2( 384, 1024, 128, 256 )
+
+[sub_resource type="SpriteFrames" id=15]
+animations = [ {
+"frames": [ SubResource( 12 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 14 ) ],
+"loop": false,
+"name": "open",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=16]
+extents = Vector2( 41, 81.5 )
+
+[sub_resource type="DynamicFont" id=21]
+font_data = ExtResource( 22 )
+
+[sub_resource type="DynamicFont" id=22]
+font_data = ExtResource( 22 )
+
+[node name="Game" type="Node2D"]
+
+[node name="Background_Image" type="Sprite" parent="."]
+position = Vector2( 1998, 730 )
+texture = ExtResource( 16 )
+offset = Vector2( -462, -430 )
+
+[node name="Background_Image2" type="Sprite" parent="."]
+position = Vector2( 975, 730 )
+texture = ExtResource( 16 )
+offset = Vector2( -462, -430 )
+
+[node name="Background_Image3" type="Sprite" parent="."]
+position = Vector2( 3022, 730 )
+texture = ExtResource( 16 )
+offset = Vector2( -462, -430 )
+
+[node name="Water" type="Area2D" parent="."]
+scale = Vector2( 0.5, 0.5 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 14 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water"]
+position = Vector2( 2942.5, 1198 )
+shape = SubResource( 17 )
+
+[node name="Background" type="TileMap" parent="."]
+scale = Vector2( 0.5, 0.5 )
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 128, 128 )
+collision_use_kinematic = true
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 327680, 2, 0, 393216, 2, 0, 393217, 2, 0, 458752, 2, 0, 458753, 2, 0, 458754, 2, 0, 1179690, 7, 0, 1179692, 7, 0, 1179695, 7, 0 )
+
+[node name="Enemy_Water" parent="." instance=ExtResource( 13 )]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 1474, 622 )
+shape = SubResource( 18 )
+
+[node name="Ground" type="TileMap" parent="."]
+scale = Vector2( 0.5, 0.5 )
+tile_set = ExtResource( 9 )
+cell_size = Vector2( 128, 128 )
+collision_use_kinematic = true
+collision_layer = 3
+collision_mask = 3
+format = 1
+tile_data = PoolIntArray( 524288, 1, 0, 524289, 1, 0, 524290, 1, 0, 524291, 1, 0, 524292, 1, 0, 524293, 1, 0, 524294, 1, 0, 524295, 1, 0, 524296, 7, 0, 524297, 54, 0, 524298, 54, 0, 524299, 54, 0, 524300, 54, 0, 524301, 8, 0, 524302, 1, 0, 524303, 1, 0, 524304, 1, 0, 524305, 1, 0, 524306, 1, 0, 524307, 1, 0, 524308, 1, 0, 524309, 54, 0, 524312, 54, 0, 524313, 1, 0, 524314, 1, 0, 524315, 1, 0, 524316, 1, 0, 524317, 1, 0, 524318, 1, 0, 524319, 1, 0, 524320, 1, 0, 524321, 1, 0, 524322, 1, 0, 524323, 1, 0, 589824, 10, 0, 589825, 10, 0, 589826, 10, 0, 589827, 10, 0, 589828, 10, 0, 589829, 10, 0, 589830, 10, 0, 589831, 10, 0, 589832, 48, 0, 589833, 48, 0, 589834, 48, 0, 589835, 48, 0, 589836, 48, 0, 589837, 48, 0, 589838, 10, 0, 589839, 10, 0, 589840, 10, 0, 589841, 10, 0, 589842, 10, 0, 589843, 10, 0, 589844, 10, 0, 589849, 10, 0, 589850, 10, 0, 589851, 10, 0, 589852, 10, 0, 589853, 10, 0, 589854, 22, 0, 589855, 22, 0, 589856, 52, 0, 589857, 52, 0, 589858, 52, 0, 589859, 52, 0, 655381, 9, 0, 655382, 9, 0, 655383, 9, 0, 655384, 9, 0 )
+
+[node name="Platform" type="TileMap" parent="."]
+scale = Vector2( 0.5, 0.5 )
+tile_set = ExtResource( 11 )
+cell_size = Vector2( 128, 64 )
+collision_use_kinematic = true
+collision_layer = 2
+collision_mask = 2
+format = 1
+tile_data = PoolIntArray( 458774, 4, 0, 458775, 2, 0, 524308, 5, 0, 524313, 5, 0, 655378, 5, 0, 655387, 5, 0 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Platform"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform/StaticBody2D"]
+position = Vector2( 2367.5, 644 )
+shape = SubResource( 19 )
+one_way_collision = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Platform/StaticBody2D"]
+position = Vector2( 2624, 516 )
+shape = SubResource( 19 )
+one_way_collision = true
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Platform/StaticBody2D"]
+position = Vector2( 3262, 516 )
+shape = SubResource( 19 )
+one_way_collision = true
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Platform/StaticBody2D"]
+position = Vector2( 3520, 644 )
+shape = SubResource( 19 )
+one_way_collision = true
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Platform/StaticBody2D"]
+position = Vector2( 2944, 453 )
+shape = SubResource( 20 )
+one_way_collision = true
+
+[node name="Wall" type="TileMap" parent="."]
+scale = Vector2( 0.5, 0.5 )
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 128, 128 )
+collision_use_kinematic = true
+collision_layer = 2
+collision_mask = 2
+format = 1
+tile_data = PoolIntArray( 458752, 2, 0, 458787, 2, 0 )
+
+[node name="Portal_to_3" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 8 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Portal_to_3"]
+position = Vector2( 2173, 384 )
+frames = SubResource( 15 )
+animation = "open"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Portal_to_3"]
+position = Vector2( 2172, 430.5 )
+shape = SubResource( 16 )
+
+[node name="Player_Container" type="Node2D" parent="."]
+script = ExtResource( 7 )
+
+[node name="Player" parent="Player_Container" instance=ExtResource( 5 )]
+position = Vector2( 96, 463 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="Enemy_Container" type="Node2D" parent="."]
+
+[node name="Enemy_Air" parent="Enemy_Container" instance=ExtResource( 12 )]
+position = Vector2( 760, 245 )
+scale = Vector2( 0.75, 0.75 )
+
+[node name="AnimatedSprite" parent="Enemy_Container/Enemy_Air" index="0"]
+frame = 1
+
+[node name="CollisionShape2D2" parent="Enemy_Container/Enemy_Air/Area2D" index="0"]
+position = Vector2( -6.66675, -33.3333 )
+
+[node name="Coin_Container" type="Node2D" parent="."]
+
+[node name="Coin" parent="Coin_Container" instance=ExtResource( 3 )]
+position = Vector2( 425, 464 )
+
+[node name="Coin2" parent="Coin_Container" instance=ExtResource( 3 )]
+position = Vector2( 1183, 273 )
+
+[node name="Coin3" parent="Coin_Container" instance=ExtResource( 3 )]
+position = Vector2( 1468, 179 )
+
+[node name="Coin4" parent="Coin_Container" instance=ExtResource( 3 )]
+position = Vector2( 1760, 275 )
+
+[node name="Coin5" parent="Coin_Container" instance=ExtResource( 3 )]
+position = Vector2( 1929, 458 )
+
+[node name="Foreground" type="TileMap" parent="."]
+scale = Vector2( 0.5, 0.5 )
+tile_set = ExtResource( 15 )
+cell_size = Vector2( 128, 128 )
+collision_use_kinematic = true
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 458755, 7, 0, 458756, 3, 0, 458761, 2, 0, 458762, 2, 0, 458763, 2, 0, 458764, 2, 0, 458766, 5, 0, 458768, 3, 0, 458772, 4, 0, 458773, 9, 0, 458776, 9, 0, 589845, 10, 0, 589846, 10, 0, 589847, 10, 0, 589848, 10, 0 )
+
+[node name="Camera" type="Camera2D" parent="."]
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 2304
+limit_bottom = 630
+limit_smoothed = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.1
+drag_margin_top = 0.1
+drag_margin_right = 0.1
+drag_margin_bottom = 0.1
+script = ExtResource( 6 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="CanvasLayer"]
+margin_right = 263.0
+margin_bottom = 40.0
+theme = ExtResource( 23 )
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HUD"]
+margin_right = 1024.0
+margin_bottom = 20.0
+color = Color( 0, 0, 0, 0.196078 )
+
+[node name="Score" type="Label" parent="CanvasLayer/HUD"]
+margin_left = 502.0
+margin_right = 1014.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 21 )
+text = "Score:"
+align = 2
+valign = 1
+
+[node name="Lives" type="Label" parent="CanvasLayer/HUD"]
+margin_left = 10.0
+margin_right = 522.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 22 )
+text = "Lives:"
+valign = 1
+
+[node name="Pause_Menu" type="Control" parent="CanvasLayer"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 23 )
+script = ExtResource( 24 )
+
+[node name="Background" type="ColorRect" parent="CanvasLayer/Pause_Menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+color = Color( 0.290196, 0.290196, 0.290196, 0.772549 )
+
+[node name="Game_Paused" type="Label" parent="CanvasLayer/Pause_Menu"]
+anchor_right = 1.0
+margin_bottom = 299.0
+text = "GAME PAUSED"
+align = 1
+valign = 1
+
+[node name="Continue" type="Button" parent="CanvasLayer/Pause_Menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = -18.0
+margin_right = 100.0
+margin_bottom = 18.0
+rect_pivot_offset = Vector2( 0, -27 )
+text = "Continue"
+
+[node name="Save" type="Button" parent="CanvasLayer/Pause_Menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = 32.0
+margin_right = 100.0
+margin_bottom = 68.0
+rect_pivot_offset = Vector2( 0, -27 )
+text = "Save"
+
+[node name="Load" type="Button" parent="CanvasLayer/Pause_Menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = 82.0
+margin_right = 100.0
+margin_bottom = 118.0
+rect_pivot_offset = Vector2( 0, -27 )
+text = "Load"
+
+[node name="Quit" type="Button" parent="CanvasLayer/Pause_Menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = 132.0
+margin_right = 100.0
+margin_bottom = 168.0
+rect_pivot_offset = Vector2( 0, -27 )
+text = "Quit"
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Button_Sound" type="AudioStreamPlayer" parent="Sounds"]
+pause_mode = 2
+stream = ExtResource( 21 )
+volume_db = -15.0
+
+[node name="Coin_Sound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 19 )
+volume_db = -10.0
+
+[node name="Die_Sound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 20 )
+volume_db = -5.0
+
+[node name="Door_Sound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 17 )
+volume_db = -5.0
+
+[node name="Jump_Sound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 18 )
+volume_db = -15.0
+
+[connection signal="body_entered" from="Water" to="Water" method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Portal_to_3" to="Portal_to_3" method="_on_Portal_body_entered"]
+[connection signal="pressed" from="CanvasLayer/Pause_Menu/Continue" to="CanvasLayer/Pause_Menu" method="_on_Continue_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause_Menu/Save" to="CanvasLayer/Pause_Menu" method="_on_Save_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause_Menu/Load" to="CanvasLayer/Pause_Menu" method="_on_Load_pressed"]
+[connection signal="pressed" from="CanvasLayer/Pause_Menu/Quit" to="CanvasLayer/Pause_Menu" method="_on_Quit_pressed"]
+
+[editable path="Enemy_Container/Enemy_Air"]

@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Levels/Level_2/Enemy_Water.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Images/spritesheet_complete copy.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=18]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 402, 660, 134, 132 )
+
+[sub_resource type="AtlasTexture" id=19]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 402, 924, 134, 132 )
+
+[sub_resource type="SpriteFrames" id=20]
+animations = [ {
+"frames": [ SubResource( 18 ), SubResource( 19 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=21]
+radius = 19.0
+height = 66.0
+
+[sub_resource type="CapsuleShape2D" id=10]
+radius = 21.9995
+height = 66.001
+
+[node name="Enemy_Water" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 1553, 608 )
+frames = SubResource( 20 )
+frame = 1
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1545, 584 )
+rotation = 1.5708
+shape = SubResource( 21 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 1545, 584 )
+enabled = true
+cast_to = Vector2( 1, 29 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 1545, 584 )
+rotation = 1.5708
+shape = SubResource( 10 )

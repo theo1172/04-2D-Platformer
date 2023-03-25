@@ -1,0 +1,86 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Assets/Images/blue_grass.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sounds/Button.wav" type="AudioStream" id=2]
+[ext_resource path="res://Menu_Theme.tres" type="Theme" id=3]
+[ext_resource path="res://UI/Main_Menu.gd" type="Script" id=4]
+[ext_resource path="res://UI/HUD.gd" type="Script" id=5]
+[ext_resource path="res://Assets/AnthologyRegularDemo-qd2x.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 6 )
+
+[node name="Game" type="Control"]
+anchor_right = 1.0
+margin_bottom = 318.0
+theme = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Background_Image2" type="Sprite" parent="."]
+position = Vector2( 970, 940 )
+texture = ExtResource( 1 )
+offset = Vector2( -462, -430 )
+
+[node name="Label" type="Label" parent="."]
+margin_right = 1024.0
+margin_bottom = 318.0
+custom_constants/line_spacing = 5
+text = "2D Platformer"
+align = 1
+valign = 1
+
+[node name="Play_Again" type="Button" parent="."]
+margin_left = 412.0
+margin_top = 300.0
+margin_right = 612.0
+margin_bottom = 336.0
+text = "Play!"
+
+[node name="Exit" type="Button" parent="."]
+margin_left = 412.0
+margin_top = 356.0
+margin_right = 612.0
+margin_bottom = 392.0
+text = "Exit"
+
+[node name="Button_Sound" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 2 )
+volume_db = -10.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="HUD" type="Control" parent="CanvasLayer"]
+margin_right = 263.0
+margin_bottom = 40.0
+theme = ExtResource( 3 )
+script = ExtResource( 5 )
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HUD"]
+margin_right = 1024.0
+margin_bottom = 20.0
+color = Color( 0, 0, 0, 0.196078 )
+
+[node name="Score" type="Label" parent="CanvasLayer/HUD"]
+margin_left = 502.0
+margin_right = 1014.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+text = "Score:"
+align = 2
+valign = 1
+
+[node name="Lives" type="Label" parent="CanvasLayer/HUD"]
+margin_left = 10.0
+margin_right = 522.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 2 )
+text = "Lives:"
+valign = 1
+
+[connection signal="pressed" from="Play_Again" to="." method="_on_Play_Again_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_Exit_pressed"]
